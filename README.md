@@ -104,4 +104,4 @@ I used a simple `randomForest` due to these reasons:
 
 3- Uncleaned data: The data contains duplicates and missing values. To address these limitation, I have did the following:
 - Duplicates: I dropped the duplicates from the data after the merging process on the `ID` column.
-- Missing values: For the numerical columns, I have employed the median imputation method as it is the most robust method for missing values. For the categorical columns, I opt for the others imputation method by introducing a new category called `others`.
+- Missing values: For the numerical columns, I have employed the median imputation method as it is the most robust method for missing values.
