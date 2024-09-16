@@ -12,7 +12,7 @@ else:
     from typing import TypedDict
 
 import google.generativeai as genai
-from hugging_face_model_loader import HuggingFaceModelLoader
+from .hugging_face_model_loader import HuggingFaceModelLoader
 # Load environment variables
 
 # Define a typed dictionary for meme caption generation
@@ -67,10 +67,10 @@ class GeminiMemeCaptionGeneration:
                     response_mime_type="application/json", response_schema=MemeCaptionGeneration # return the result in JSON format and the caption is the value of the key "content".
                 )
             )
-            return result.text
+            return json.loads(result.text)
         except Exception as e:
-            print(f"Error generating meme: {e}")
-            return None
+            raise KeyError(f"Failed to generate meme text due to missing content in the response: {e}")
+
 
 class LLaMa3MemeCaptionGeneration:
     def __init__(self, model_name: str = "meta-llama/Meta-Llama-3.1-8B-Instruct", model_quantization: bool = True):

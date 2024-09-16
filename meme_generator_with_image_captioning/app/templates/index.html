@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Display with Caption</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <script>
+        window.onload = function() {
+            {% if error_message %}
+                alert("{{ error_message }}");
+            {% endif %}
+        };
+    </script>
+</head>
+<body>
+
+
+    
+    <div class="container">
+        <h1>Enter Image URL, and LLM Model</h1>
+        <form method="POST" action="/">
+            <input type="text" name="image_url" placeholder="Enter Image URL here..." required>
+            <select name="model">
+                <option value="Gemini-Flash">Gemini-Flash</option>
+                <option value="LLaMa-3">LLaMa-3</option>
+            </select>
+            <button type="submit">Generate Meme</button>
+        </form>
+        {% if image_data %}
+            <img src="data:image/png;base64,{{ image_data }}" alt="Generated Meme">
+        {% endif %}
+    </div>
+</body>
+</html>
