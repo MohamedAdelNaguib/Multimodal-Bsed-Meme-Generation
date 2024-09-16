@@ -44,7 +44,7 @@ class GeminiMemeCaptionGeneration:
             raise ValueError("GEMINI_API_KEY not found in environment variables")
         return gemini_api_key
     
-    def generate_meme_text(self, image_description: str) -> Optional[str]:
+    def generate_meme_text(self, image_description: str) -> str:
         """
         Generate a witty or humorous caption for an image description.
         
