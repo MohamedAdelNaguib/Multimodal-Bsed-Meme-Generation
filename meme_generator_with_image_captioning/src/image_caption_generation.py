@@ -1,13 +1,19 @@
 import os
 import json
 import re
+import sys
 from dotenv import load_dotenv
-from typing import Optional, TypedDict
+
+from typing import TYPE_CHECKING
+
+if sys.version_info < (3, 12):
+    from typing_extensions import TypedDict
+else:
+    from typing import TypedDict
 
 import google.generativeai as genai
 from hugging_face_model_loader import HuggingFaceModelLoader
 # Load environment variables
-load_dotenv()
 
 # Define a typed dictionary for meme caption generation
 class MemeCaptionGeneration(TypedDict):
@@ -15,7 +21,7 @@ class MemeCaptionGeneration(TypedDict):
     
     
 class GeminiMemeCaptionGeneration:
-    def __init__(self, model_name: str):
+    def __init__(self, model_name: str = "gemini-1.5-flash"):
         """
         Initialize the generator by configuring it with the API key and setting up the model.
         
@@ -28,10 +34,11 @@ class GeminiMemeCaptionGeneration:
         gemini_api_key = self._get_gemini_token()
         
         genai.configure(api_key=gemini_api_key)
-        self.model = genai.GenerativeModel("gemini-1.5-flash")
+        self.model = genai.GenerativeModel(model_name)
         
     def _get_gemini_token(self) -> str:
         """Retrieve the Gemini API token from environment variables."""
+        load_dotenv()
         gemini_api_key = os.getenv('GEMINI_API_KEY')
         if not gemini_api_key:
             raise ValueError("GEMINI_API_KEY not found in environment variables")
@@ -65,8 +72,6 @@ class GeminiMemeCaptionGeneration:
             print(f"Error generating meme: {e}")
             return None
 
-
-
 class LLaMa3MemeCaptionGeneration:
     def __init__(self, model_name: str = "meta-llama/Meta-Llama-3.1-8B-Instruct", model_quantization: bool = True):
         """
@@ -78,9 +83,9 @@ class LLaMa3MemeCaptionGeneration:
         """
         self.model = HuggingFaceModelLoader(
             task="text-generation", 
-            model=model_name,
+            model_name=model_name,
             model_quantization=model_quantization
-        )
+        ).model
 
     def generate_meme_text(self, image_description: str) -> str:
         """

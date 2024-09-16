@@ -13,9 +13,9 @@ class ImageContextRecognition:
         """
         self.model = HuggingFaceModelLoader(
             task="image-to-text", 
-            model=model_name,
+            model_name=model_name,
             model_quantization=model_quantization
-        )
+        ).model
 
     def load_image(self, image_path: str) -> Image:
         """
@@ -58,5 +58,5 @@ class ImageContextRecognition:
             return str(e)  # Returning the error message directly, could also handle differently if needed
 
         prompt = "USER: <image>\nWrite a description for this image that fully captures both the objects and the scene in the given image\nASSISTANT:"
-        result = self.model.generate(image, prompt=prompt, generate_kwargs={"max_new_tokens": 200})
+        result = self.model(image, prompt=prompt, generate_kwargs={"max_new_tokens": 200})
         return result[0]["generated_text"].split("ASSISTANT:")[-1].strip()

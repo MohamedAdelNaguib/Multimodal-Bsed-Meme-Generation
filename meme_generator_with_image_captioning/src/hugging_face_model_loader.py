@@ -2,8 +2,8 @@ import os
 import requests
 from PIL import Image
 import torch
+from dotenv import load_dotenv
 from transformers import BitsAndBytesConfig, pipeline
-
 
 class HuggingFaceModelLoader:
 
@@ -28,6 +28,7 @@ class HuggingFaceModelLoader:
 
     def _get_hf_token(self) -> str:
         """Retrieve the Hugging Face API token from environment variables."""
+        load_dotenv()
         hf_token = os.getenv('HF_TOKEN')
         if not hf_token:
             raise ValueError("HF_TOKEN not found in environment variables")
