@@ -1,5 +1,5 @@
 # GenAI Assessment
-This repository contains the code for mutlimodal based meme generation using scene detection.
+This repository contains the code  scene detection based meme generation using Large Mutlimodal Model (LMM).
 
 
 ## Install
