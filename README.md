@@ -1,9 +1,6 @@
 # GenAI Assessment
-This repository contains the code for the GenAI assessment.
+This repository contains the code for mutlimodal based meme generation using scene detection.
 
-- [x] Code
-    - [x] Meme Generator with Image Description
-    - [x] Binary Classification
 
 ## Install
 This installs the dependencies for the both the meme generator with image description and the binary classification.
@@ -65,43 +62,3 @@ After running the above command, you can go to the following appeared in the bas
 - However, these models are free and open-source, they still requires a lot of resources to run. I tried to run the models on my local machine but it was not possible due to my limited resources. So, I tried to run it on the free version of google colab but I did not manage to load both `LLama 3.1-8B-Instruct` and `LLaVa` at the same time or even one of them alone.
 
 - Solution: I used quantization technique such as loading in `float16` instead of `float32` to reduce the size of the models and make it possible to run on my free version of google colab using only one `T4` GPU with `15GB` of memory.
-
-## Binary Classification
-
-### Overview
-
-A Binary classification model for tabular data.
-
-### Run the Binary Classification
-The model is implemented within a python notebook called `binary_classifier.ipynb` where you can run each cell to see the results.
-### Architecture
-
-I used a simple `randomForest` due to these reasons:
-- Data simplicity and limited data provided, If I used another linear model such as `logisticRegression`, I would have faced the problem of overfitting.
-- Trees models can handle different feature distributions internally without the need for normalization/ feature scaling.
-
-
-### Approach:
-
-- Data Inspection: I started by inspecting the data to get a sense of the features and the target.
-- Data Cleaning: Cleaning the data by addressing the duplicates, missing values, and outliers.
-- Data Visualization: Visualizing the data to get a sense of the features and the target.
-- Merging the data: Merging both tables to get the final overall dataset needed for the model.
-- Model Training: Training the model using the training data.
-- Model Evaluation: Evaluating the model using the testing data.
-
-### Findings: 
-- As noticed in the following figer, the target label `Type` is heavily dependent some features such as `VOL`.
-![VOL](assets/VOL.png)
-- Some features do not really contribute to the model outcome such as `BJZHD`.
-- Data is easily separable, since the train accuracy is 100% and the test accuracy is 99%.
-
-### Challenges:
-
-1- Data Imbalance: The data is imbalanced, there are more positive samples than negative samples.
-
-2- Feature Naming: The column names are not descriptive, for example, `BJZHD` is not descriptive by itself, which makes it hard to understand the feature's purpose and implement any feature engineering technique on it.
-
-3- Uncleaned data: The data contains duplicates and missing values. To address these limitation, I have did the following:
-- Duplicates: I dropped the duplicates from the data after the merging process on the `ID` column.
-- Missing values: For the numerical columns, I have employed the median imputation method as it is the most robust method for missing values.
